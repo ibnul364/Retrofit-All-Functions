@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
 //            getPost();
 //            getComments();
-                createPost();
+//                createPost();
+                    updatePost();
 
     }
 
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
         //2nd Attempt
     public void getComments() {
@@ -134,6 +134,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    private void updatePost(){
+
+        Post post = new Post("13","new title" , "null");
+
+        Call<Post> call = jsonPlaceholder.putPost(2, post);
+
+        call.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Post> postList = new ArrayList<>();
+                postList.add(response.body());
+
+                PostAdapter postAdapter = new PostAdapter(postList, MainActivity.this);
+                recyclerView.setAdapter(postAdapter);
+                Toast.makeText(MainActivity.this, response.code() + " Response ", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+
+
 
 
 
