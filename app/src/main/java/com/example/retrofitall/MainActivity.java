@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public void getComments() {
 
 
-        Call<List<Comment>> call = jsonPlaceholder.getComments(3);
+        Call<List<Comment>> call = jsonPlaceholder.getComments(2);
 
         call.enqueue(new Callback<List<Comment>>() {
             @Override
