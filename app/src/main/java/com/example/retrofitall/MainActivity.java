@@ -107,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createPost(){
-        Post post = new Post("18","First Title","First Text");
+//        Post post = new Post("18","First Title","First Text");
 
-        Call<Post> call = jsonPlaceholder.createPost(post);
+
+        Call<Post> call = jsonPlaceholder.createPost("13","Second Title","Second Text");
 
         call.enqueue(new Callback<Post>() {
             @Override
