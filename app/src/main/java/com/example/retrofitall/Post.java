@@ -8,6 +8,12 @@ public class Post {
         return userId;
     }
 
+    public Post(String userId, String title, String body) {
+        this.userId = userId;
+        this.title = title;
+        this.body = body;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
