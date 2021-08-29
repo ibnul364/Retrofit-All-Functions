@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    JSONPlaceholder jsonPlaceholder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,29 +36,74 @@ public class MainActivity extends AppCompatActivity {
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
 
-        JSONPlaceholder jsonPlaceholder = retrofit.create(JSONPlaceholder.class);
-        Call<List<Post>>  call = jsonPlaceholder.getPost();
+         jsonPlaceholder = retrofit.create(JSONPlaceholder.class);
+
+//            getPost();
+            getComments();
+
+    }
+
+
+    //First Attempt
+    public void getPost() {
+
+
+        Call<List<Post>> call = jsonPlaceholder.getPost();
 
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                    if(!response.isSuccessful()){
-                        Toast.makeText(MainActivity.this,response.code(),Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                if (!response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    List<Post> postList = response.body();
-                    PostAdapter postAdapter = new PostAdapter(postList, MainActivity.this);
-                    recyclerView.setAdapter(postAdapter);
+                List<Post> postList = response.body();
+                PostAdapter postAdapter = new PostAdapter(postList, MainActivity.this);
+                recyclerView.setAdapter(postAdapter);
 
 //                    Log.d("@@",""+postAdapter);
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+        //2nd Attempt
+    public void getComments() {
+
+
+        Call<List<Comment>> call = jsonPlaceholder.getComments();
+
+        call.enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Comment> comments = response.body();
+                CommentAdapter commentAdapter = new CommentAdapter(MainActivity.this,comments);
+                recyclerView.setAdapter(commentAdapter);
+
+//                    Log.d("@@",""+commentAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
+
+
     }
+
+
+
 }
