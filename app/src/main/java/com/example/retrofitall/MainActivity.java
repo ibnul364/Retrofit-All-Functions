@@ -42,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
 //            getPost();
 //            getComments();
 //                createPost();
-                    updatePost();
+//                    updatePost();
+                        deletePost();
 
     }
+
 
 
     //First Attempt
@@ -171,6 +173,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    private void deletePost() {
+
+       Call<Void> call = jsonPlaceholder.deletePost(2);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(MainActivity.this, "Deleted Successfully "+response.code(), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
 
 
 

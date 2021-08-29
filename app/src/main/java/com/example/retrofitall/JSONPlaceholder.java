@@ -44,5 +44,5 @@ public interface JSONPlaceholder {
 
 
     @DELETE("posts/{id}")
-    Call<Post> deletePost(@Path("id") int id);
+    Call<Void> deletePost(@Path("id") int id);
 }
