@@ -138,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updatePost(){
 
-        Post post = new Post("13","new title" , "null");
+        Post post = new Post("13","new title" , null);
 
-        Call<Post> call = jsonPlaceholder.putPost(2, post);
+        Call<Post> call = jsonPlaceholder.patchPost(2, post);
 
         call.enqueue(new Callback<Post>() {
             @Override
